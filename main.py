@@ -22,9 +22,13 @@ try:
         angles_str = arduino_serial.readline().decode().strip()
         joint_angles = [float(angle) for angle in angles_str.split(',')]
 
-        # Set joint angles in PyBullet
-        for joint_index, angle in enumerate(joint_angles):
-            p.resetJointState(robot_id, joint_index, angle)
+        # Set joint angles in PyBullet for specific joints
+        for arduino_joint_index, angle in enumerate(joint_angles):
+            # Map Arduino joint index to PyBullet joint index
+            pybullet_joint_indices = [0, 2, 4, 6, 8, 11]
+            if arduino_joint_index < len(pybullet_joint_indices):
+                pybullet_joint_index = pybullet_joint_indices[arduino_joint_index]
+                p.resetJointState(robot_id, pybullet_joint_index, angle)
 
         # Step the simulation
         p.stepSimulation()
