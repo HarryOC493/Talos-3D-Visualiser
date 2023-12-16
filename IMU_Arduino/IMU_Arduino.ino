@@ -1,4 +1,5 @@
 #include <Arduino_LSM9DS1.h>
+#include <Wire.h> // Include the Wire library for I2C communication
 
 void setup() {
   Serial.begin(9600);
@@ -23,33 +24,56 @@ void setup() {
   Serial.println();
   Serial.println("Gyroscope in degrees/second");
   Serial.println("X\tY\tZ");
+
+  Serial.println("Azimuth (degrees)");
+
+  Wire.begin(); // Initialize the I2C communication for the magnetometer
 }
 
 void loop() {
-  float x, y, z;
+  float x_acc, y_acc, z_acc;
+  float x_gyro, y_gyro, z_gyro;
 
+  // Read accelerometer data
   if (IMU.accelerationAvailable()) {
-    IMU.readAcceleration(x, y, z);
+    IMU.readAcceleration(x_acc, y_acc, z_acc);
   }
 
-  float IMUx, IMUy, IMUz;
-
+  // Read gyroscope data
   if (IMU.gyroscopeAvailable()) {
-    IMU.readGyroscope(IMUx, IMUy, IMUz);
+    IMU.readGyroscope(x_gyro, y_gyro, z_gyro);
   }
 
-  Serial.print(x);
+  // Read magnetometer data and calculate azimuth
+  float x_mag, y_mag, z_mag;
+  float azimuth;
+
+  if (IMU.magneticFieldAvailable()) {
+    IMU.readMagneticField(x_mag, y_mag, z_mag);
+
+    // Calculate azimuth (angle between magnetic north and XY components)
+    azimuth = atan2(y_mag, x_mag) * (180.0 / PI);
+    if (azimuth < 0) {
+      azimuth += 360.0; // Ensure azimuth is in the range [0, 360)
+    }
+  }
+
+  // Print accelerometer, gyroscope, and azimuth data
+  Serial.print(x_acc);
   Serial.print(',');
-  Serial.print(y);
+  Serial.print(y_acc);
   Serial.print(',');
-  Serial.print(z);
+  Serial.print(z_acc);
   Serial.print(',');
 
-  Serial.print(IMUx);
+  Serial.print(x_gyro);
   Serial.print(',');
-  Serial.print(IMUy);
+  Serial.print(y_gyro);
   Serial.print(',');
-  Serial.println(IMUz);
+  Serial.print(z_gyro);
+  Serial.print(',');
+
+  Serial.println(azimuth);
+
   delay(1000); // Delay for 1 second (adjust as needed)
 }
-

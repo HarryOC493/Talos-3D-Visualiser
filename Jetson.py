@@ -1,10 +1,10 @@
 import serial
 import socket
-import time
 
 # Replace with the appropriate serial ports for your Arduino devices and their respective baud rates
 ser1 = serial.Serial('/dev/ttyACM0', 9600)
 ser2 = serial.Serial('/dev/ttyACM1', 9600)
+ser3 = serial.Serial('/dev/ttyACM2', 9600)
 
 # Replace with your MacBook's IP address and the chosen port number
 macbook_ip = '192.168.0.26'
@@ -23,18 +23,26 @@ try:
             message = []
             # Read data from the joints
             positions = ser1.readline().decode('utf-8').strip()
-
             if positions:
                 joint_angles_degrees = [float(angle) for angle in positions.replace('[', '').replace(']', '').split(',')]
                 message.extend(joint_angles_degrees)
 
+
             # Read data from the imu
             angles = ser2.readline().decode('utf-8').strip()
-
             if angles:
                 imu_angles_degrees = [float(angle) for angle in angles.replace('[', '').replace(']', '').split(',')]
                 message.extend(imu_angles_degrees)
 
+
+            distance_str = ser2.readline().decode('utf-8').strip()
+            # Extract the float value from the "Distance" string
+            distance_value = float(distance_str.split(' ')[1])
+
+
+
+            # Add the extracted distance value to the message
+            message.append(distance_value)
             # Send the message to the MacBook
             serialized_message = ",".join(map(str, message))
             sock.sendall(serialized_message.encode('utf-8'))
