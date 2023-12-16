@@ -33,14 +33,22 @@ try:
                 imu_angles_degrees = [float(angle) for angle in angles.replace('[', '').replace(']', '').split(',')]
                 message.extend(imu_angles_degrees)
 
+            
             # Read data from the distance sensor
             distance_str = ser3.readline().decode('utf-8').strip()
-            
-            # Extract the float value from the "Distance" string
-            distance_value = float(distance_str.split(' ')[1])
-            
-            # Add the extracted distance value to the message
-            message.append(distance_value)
+
+            # Check if the string starts with "Distance:" before extracting the float value
+            if distance_str.startswith('Distance:'):
+                try:
+                    # Extract the float value from the "Distance" string
+                    distance_value = float(distance_str.split(' ')[1])
+                    # Add the extracted distance value to the message
+                    message.append(distance_value)
+                except ValueError as e:
+                    print(f"Error converting distance data to float: {e}")
+            else:
+                print(f"Unexpected distance data format: {distance_str}")
+
 
             # Send the message to the MacBook
             serialized_message = ",".join(map(str, message))
