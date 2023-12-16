@@ -6,8 +6,22 @@ float L_Thaigh[7]  = {0.58, 0.04, 90, -90, A3, 0, 0};
 float L_Knee[7]  = {0.11, 0.66, 90, -90, A4, 0, 0};
 float L_Ankle[7]  = {0.47, 0.28, 27, -40, A5, 0, 0};
 
+// Number of readings to use for the moving average
+const int numReadings = 10;
+
+// Arrays to store readings and indices for each joint
+int readings[6][numReadings];
+int indices[6] = {0, 0, 0, 0, 0, 0};
+
 void setup() {
   Serial.begin(9600); // Initialize serial communication at 9600 baud
+
+  // Initialize arrays to 0
+  for (int i = 0; i < 6; ++i) {
+    for (int j = 0; j < numReadings; ++j) {
+      readings[i][j] = 0;
+    }
+  }
 }
 
 void loop() {
@@ -21,15 +35,29 @@ void loop() {
     potToVoltage(L_Ankle)
   };
 
-  // Send joint angles as a list
-  Serial.print("[");
+  // Update the moving average for each joint
   for (int i = 0; i < 6; ++i) {
-    Serial.print(joint_angles[i]);
+    // Subtract the oldest reading
+    readings[i][indices[i]] = joint_angles[i];
+    // Calculate the average
+    int total = 0;
+    for (int j = 0; j < numReadings; ++j) {
+      total += readings[i][j];
+    }
+    int average = total / numReadings;
+
+    // Send the averaged value for each joint
+    Serial.print(average);
     if (i < 5) {
       Serial.print(",");
     }
   }
-  Serial.println("]");
+  Serial.println();
+
+  // Move to the next position in the array
+  for (int i = 0; i < 6; ++i) {
+    indices[i] = (indices[i] + 1) % numReadings;
+  }
 
   delay(1000); // Delay for 1 second (adjust as needed)
 }
