@@ -37,7 +37,7 @@ try:
             # Read data from the distance sensor
             distance_str = ser3.readline().decode('utf-8').split(" ")
             distance = float(distance_str[1])
-            message.extend(distance)
+            message.append(distance)
 
             # Send the message to the MacBook
             serialized_message = ",".join(map(str, message))
