@@ -35,12 +35,13 @@ try:
                 message.extend(imu_angles_degrees)
 
 
-            distance_str = ser2.readline().decode('utf-8').strip()
+            # Read data from the distance sensor
+            distance_str = ser3.readline().decode('utf-8').strip()
             # Extract the float value from the "Distance" string
             distance_value = float(distance_str.split(' ')[1])
             # Add the extracted distance value to the message
-            print(distance_value)
             message.append(distance_value)
+
 
 
 
