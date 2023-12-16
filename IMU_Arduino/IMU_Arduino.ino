@@ -50,4 +50,6 @@ void loop() {
   Serial.print(IMUy);
   Serial.print(',');
   Serial.println(IMUz);
+  delay(1000); // Delay for 1 second (adjust as needed)
 }
+

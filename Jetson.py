@@ -1,33 +1,55 @@
 import serial
+import socket
+import time
 
 # Replace with the appropriate serial ports for your Arduino devices and their respective baud rates
 ser1 = serial.Serial('/dev/ttyACM0', 9600)
 ser2 = serial.Serial('/dev/ttyACM1', 9600)
 
+# Replace with your MacBook's IP address and the chosen port number
+macbook_ip = '192.168.0.26'
+macbook_port = 50000
+
+# Create a socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 try:
+    # Connect to the MacBook
+    sock.connect((macbook_ip, macbook_port))
+    print(f"Connected to MacBook at {macbook_ip}:{macbook_port}")
+
     while True:
         try:
-            # Read data from the first joints
+            message = []
+            # Read data from the joints
             positions = ser1.readline().decode('utf-8').strip()
-            print("Received data from Arduino 1:", positions)
 
-            joint_angles_degrees = [float(angle) for angle in positions.replace('[', '').replace(']', '').split(',')]
+            if positions:
+                joint_angles_degrees = [float(angle) for angle in positions.replace('[', '').replace(']', '').split(',')]
+                message.extend(joint_angles_degrees)
 
-            print(joint_angles_degrees)
-
-            # Read data from the second imu
+            # Read data from the imu
             angles = ser2.readline().decode('utf-8').strip()
-            print("Received data from Arduino 2:", angles)
 
-            
+            if angles:
+                imu_angles_degrees = [float(angle) for angle in angles.replace('[', '').replace(']', '').split(',')]
+                message.extend(imu_angles_degrees)
+
+            # Send the message to the MacBook
+            serialized_message = ",".join(map(str, message))
+            sock.sendall(serialized_message.encode('utf-8'))
+            sock.sendall(b'\n')  # Add a newline to mark the end of each message
+
+            print(message)
+
+        except ValueError as e:
+            print(f"Error converting data to float: {e}")
 
         except KeyboardInterrupt:
-            # Close the serial connections when the script is interrupted
-            ser1.close()
-            ser2.close()
+            # Close the socket when the script is interrupted
+            sock.close()
             break
 
 finally:
-    # Ensure serial connections are closed even if an exception occurs
-    ser1.close()
-    ser2.close()
+    # Ensure the socket is closed even if an exception occurs
+    sock.close()
