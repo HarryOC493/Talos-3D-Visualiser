@@ -10,7 +10,7 @@ physicsClient = p.connect(p.GUI)  # or p.DIRECT for non-visual mode
 p.setGravity(0, 0, 0)
 
 # Load URDF model
-robot_urdf_path = "Talos_Lite.urdf"
+robot_urdf_path = "Assets/Talos_Lite.urdf"
 robot_id = p.loadURDF(robot_urdf_path, [0, 0, 0], useFixedBase=True)
 
 # Define joint indices
