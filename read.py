@@ -42,12 +42,14 @@ try:
         rotational_acceleration = values[3:6]
         joint_positions = values[7:]
         heading = values[6]
+        distance = values[13]
 
         # Print the extracted values
         print("Linear Acceleration:", linear_acceleration)
         print("Rotational Acceleration:", rotational_acceleration)
         print("Joint Positions:", joint_positions)
         print("Heading: ", heading)
+        print("Distance: ", distance)
 
 except KeyboardInterrupt:
     pass
