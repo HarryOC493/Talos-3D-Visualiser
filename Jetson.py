@@ -38,11 +38,13 @@ try:
             distance_str = ser2.readline().decode('utf-8').strip()
             # Extract the float value from the "Distance" string
             distance_value = float(distance_str.split(' ')[1])
-
-
-
             # Add the extracted distance value to the message
+            print(distance_value)
             message.append(distance_value)
+
+
+
+
             # Send the message to the MacBook
             serialized_message = ",".join(map(str, message))
             sock.sendall(serialized_message.encode('utf-8'))
