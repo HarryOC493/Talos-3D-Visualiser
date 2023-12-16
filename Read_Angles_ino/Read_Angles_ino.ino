@@ -1,24 +1,35 @@
 // Pot Mappings. Format VMax | VMin | AMax | AMin | PIN | PrevPosition | Prev Time
-float R_Thaigh[7] = {0.71, 0.15, 90, -90, A1, 0, 0}; // Added 2 elements for prevPosition and prevTime
-float R_Knee[7]   = {0.68, 0.18, 90, -65, A0, 0, 0}; // Added 2 elements for prevPosition and prevTime
-float R_Ankle[7]  = {0.52, 0.33, 27, -45, A2, 0, 0}; // Added 2 elements for prevPosition and prevTime
-float L_Thaigh[7]  = {0.58, 0.04, 90, -90, A3, 0, 0}; // Added 2 elements for prevPosition and prevTime
-float L_Knee[7]  = {0.11, 0.66, 90, -90, A4, 0, 0}; // Added 2 elements for prevPosition and prevTime
-float L_Ankle[7]  = {0.47, 0.28, 27, -40, A5, 0, 0}; // Added 2 elements for prevPosition and prevTime
-
+float R_Thaigh[7] = {0.71, 0.15, 90, -90, A1, 0, 0};
+float R_Knee[7]   = {0.68, 0.18, 90, -65, A0, 0, 0};
+float R_Ankle[7]  = {0.52, 0.33, 27, -45, A2, 0, 0};
+float L_Thaigh[7]  = {0.58, 0.04, 90, -90, A3, 0, 0};
+float L_Knee[7]  = {0.11, 0.66, 90, -90, A4, 0, 0};
+float L_Ankle[7]  = {0.47, 0.28, 27, -40, A5, 0, 0};
 
 void setup() {
   Serial.begin(9600); // Initialize serial communication at 9600 baud
 }
 
 void loop() {
-  int ThaighAngle = potToVoltage(L_Ankle);
+  // Read angles for each joint
+  int joint_angles[6] = {
+    potToVoltage(R_Thaigh),
+    potToVoltage(R_Knee),
+    potToVoltage(R_Ankle),
+    potToVoltage(L_Thaigh),
+    potToVoltage(L_Knee),
+    potToVoltage(L_Ankle)
+  };
 
-  // Print the voltages to the serial monitor
-  Serial.print("Potentiometer 1 Voltage: ");
-  Serial.print(ThaighAngle);
-  Serial.println(" Degrees");
-
+  // Send joint angles as a list
+  Serial.print("[");
+  for (int i = 0; i < 6; ++i) {
+    Serial.print(joint_angles[i]);
+    if (i < 5) {
+      Serial.print(",");
+    }
+  }
+  Serial.println("]");
 
   delay(1000); // Delay for 1 second (adjust as needed)
 }

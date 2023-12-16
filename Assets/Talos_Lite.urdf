@@ -1,0 +1,536 @@
+<?xml version="1.0"?>
+<robot name="Hocc_LiteBot_Prototype">
+    <link name='Hip'>
+        <visual>
+            <origin xyz="0 0 0.38" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Hip.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0.38" rpy="1.5708 0 1.5708"/>
+            <mass value="0.82"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.38" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Hip.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+        
+    </link>
+
+    <link name="Psu">
+        <visual>
+            <origin xyz="0.075 0.07 0.4585" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Psu.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.075 0.07 0.4585" rpy="1.5708 0 1.5708"/>
+            <mass value="0.5"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.075 0.07 0.4585" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Psu.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Hat">
+        <visual>
+            <origin xyz="0.075 0.07 0.455" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Hat.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="teal">
+                <color rgba="0 0.5 0.5 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.075 0.07 0.455" rpy="1.5708 0 1.5708"/>
+            <mass value="0.15"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.075 0.07 0.455" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Hat.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Camera_link">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.075 0.01 0.455"/>
+            <mass value="0.01"/>
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0.075 0.01 0.455"/>
+            <geometry>
+                <box size="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="Cam_Material">
+                <color rgba="0 0 1 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0.075 0.01 0.455"/>
+            <geometry>
+                <box size="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Pendi_Motor">
+        <visual>
+         <origin xyz="0.01 0.16 0.46" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Pendi_Motor.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0.01 0.16 0.46" rpy="1.5708 0 1.5708"/>
+            <mass value="0.08"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.01 0.16 0.46" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Pendi_Motor.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Pendi_Assembly">
+        <visual>
+         <origin xyz="0.02 0.01 0.06" rpy="-1.5708 1.5708 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Pendi_Assembly.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0.02 0.01 0.06" rpy="-1.5708 1.5708 1.5708"/>
+            <mass value="0.08"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.02 0.01 0.06" rpy="-1.5708 1.5708 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Pendi_Assembly.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Pendi_Weight">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.02 0.02 0.02"/>
+            </geometry>
+            <material name="weight_material">
+                <color rgba="0.5 01.0 0.8 1.0"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.02 0.02 0.02"/>
+            </geometry>
+        </collision>
+    </link>
+
+    
+
+    <link name="R_Thaigh">
+        <visual>
+            <!-- 0.075 = Level @ Z Axis -->
+            <!--<origin xyz="0.0485 -0.125 0.267" rpy="1.5708 0 -1.5708"/>-->
+            <origin xyz="0.021 0.014 -0.1165" rpy="1.5708 0 -1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Thaigh.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0.021 0.014 -0.1165" rpy="1.5708 0 -1.5708"/>
+            <mass value="0.6"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.021 0.014 -0.1165" rpy="1.5708 0 -1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Thaigh.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="R_Shin">
+        <visual>
+        <!-- 0.155 -->
+            <origin xyz="0.0245 0.13 -0.040" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/Shin.stl" scale="1 1 1" />
+            </geometry>
+        </visual>
+        <inertial>
+           <origin xyz="0.0245 0.13 -0.040" rpy="1.5708 0 0"/>
+            <mass value="0.33"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+          <origin xyz="0.0245 0.13 -0.040" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/Shin.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="R_Foot">
+        <visual>
+            <origin xyz="-0.04 0.09 -0.04" rpy="1.5708 0 0"/>
+            <geometry>
+                 <mesh filename="Assets/foot.stl" scale="1 1 1" />
+            </geometry>
+        </visual>
+        <inertial>
+             <origin xyz="-0.04 0.09 -0.04" rpy="1.5708 0 0"/>
+            <mass value="0.392"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+             <origin xyz="-0.04 0.09 -0.04" rpy="1.5708 0 0"/>
+            <geometry>
+                 <mesh filename="Assets/foot.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
+    </link>
+
+
+    <link name="L_Thaigh">
+        <visual>
+            
+            <origin xyz="-0.021 0.151 -0.1165" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Thaigh.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="-0.021 0.151 -0.1165" rpy="1.5708 0 1.5708"/>
+            <mass value="0.6"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="-0.021 0.151 -0.1165" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="Assets/Thaigh.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="L_Shin">
+        <visual>
+            <origin xyz="0.0245 0.013 -0.040" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/Shin.stl" scale="1 1 1" />
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0.0245 0.013 -0.040" rpy="1.5708 0 0"/>
+            <mass value="0.33"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.0245 0.013 -0.040" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/Shin.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="L_Foot">
+        <visual>
+            <origin xyz="-0.04 -0.04 -0.04" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/foot.stl" scale="1 1 1" />
+            </geometry>
+        </visual>
+        <inertial>
+           <origin xyz="-0.04 -0.04 -0.04" rpy="1.5708 0 0"/>
+            <mass value="0.392"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <origin xyz="-0.04 -0.04 -0.04" rpy="1.5708 0 0"/>
+            <geometry>
+                <mesh filename="Assets/foot.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!--<link name="MsrTool">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.003"/>
+            </geometry>
+            <material name="joint_material1">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+            <collision>
+               <origin xyz="0 0 0" rpy="0 0 0"/>
+            </collision>
+        </visual>
+    </link>-->
+
+    <!--<link name="Env_Block">
+        <inertial>
+                <origin rpy="0 0 0" xyz="1 0 0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0.3 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 0.1"/>
+                </geometry>
+                <material name="Cam_Material">
+                    <color rgba="0 0 1 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="1 0 0"/>
+                <geometry>
+                    <box size="0.01 0.01 0.01"/>
+                </geometry>
+            </collision>
+    </link>-->
+
+    <link name="L_Thaigh_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="L_Shin_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="L_Foot_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="R_Thaigh_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="R_Shin_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="R_Foot_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+    <link name="Pendi_Axle">
+    <inertial>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+    </inertial>
+    </link>
+
+
+
+
+
+   
+   
+   
+   
+   
+   
+   
+    <!--<joint name="Measure" type="fixed">
+        <parent link="Pendi_Axle"/>
+        <child link="MsrTool"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>-->
+
+
+
+
+
+
+
+    
+
+
+    <joint name="R_Thaigh_Axle" type="fixed">
+        <parent link="R_Thaigh_Axle"/>
+        <child link="R_Thaigh"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="HipRThaigh" type="revolute">
+        <parent link="Hip"/>
+        <child link="R_Thaigh_Axle"/>
+        <origin xyz="0.0275 -0.14 0.374" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="R_Shin_Axle" type="fixed">
+        <parent link="R_Shin_Axle"/>
+        <child link="R_Shin"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="ThaighRShin" type="revolute">
+        <parent link="R_Thaigh"/>
+        <child link="R_Shin_Axle"/>
+        <origin xyz="0 0.011 -0.153" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="R_Foot_Axle" type="fixed">
+        <parent link="R_Foot_Axle"/>
+        <child link="R_Foot"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="ShinRFoot" type="revolute">
+        <parent link="R_Shin"/>
+        <child link="R_Foot_Axle"/>
+        <origin xyz="0 0.01 -0.1855" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+
+
+
+
+    <joint name="L_Thaigh_Axle" type="fixed">
+        <parent link="L_Thaigh_Axle"/>
+        <child link="L_Thaigh"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="HipLThaigh" type="revolute">
+        <parent link="Hip"/>
+        <child link="L_Thaigh_Axle"/>
+        <origin xyz="0.0275 0 0.374" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="L_Shin_Axle" type="fixed">
+        <parent link="L_Shin_Axle"/>
+        <child link="L_Shin"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="ThaighLShin" type="revolute">
+        <parent link="L_Thaigh"/>
+        <child link="L_Shin_Axle"/>
+        <origin xyz="0 0.151 -0.155" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="L_Foot_Axle" type="fixed">
+        <parent link="L_Shin"/>
+        <child link="L_Foot_Axle"/>
+        <!--<origin xyz="0 0 -0.185" rpy="0 0 0"/>-->
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="ShinLFoot" type="revolute">
+        <parent link="L_Shin_Axle"/>
+        <child link="L_Foot"/>
+        <origin xyz="0 0 -0.185" rpy="0 0 0"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="PsuMount" type="fixed">
+        <parent link="Hip"/>
+        <child link="Psu"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="PcbMount" type="fixed">
+        <parent link="Psu"/>
+        <child link="Hat"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="Pendi_Motor" type="fixed">
+        <parent link="Hip"/>
+        <child link="Pendi_Motor"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="Pendi_Axle" type="fixed">
+        <parent link="Pendi_Motor"/>
+        <child link="Pendi_Axle"/>
+        <origin xyz="0.0015 0.145 0.473" rpy="0 0 0"/>
+    </joint>
+    <joint name="Pendi_Link" type="revolute">
+        <parent link="Pendi_Axle"/>
+        <child link="Pendi_Assembly"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="5.886" velocity=" 6.98"/>
+    </joint>
+
+    <joint name="Pendi_Weight" type="fixed">
+        <parent link="Pendi_Assembly"/>
+        <child link="Pendi_Weight"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="camera_joint" type="fixed">
+        <parent link="Psu"/>
+        <child link="Camera_link"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <!--<joint name="Env_joint" type="fixed">
+        <parent link="Hip"/>
+        <child link="Env_Block"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>-->
+
+</robot>
