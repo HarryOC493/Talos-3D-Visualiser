@@ -40,7 +40,7 @@ try:
         # Extract specific values
         linear_acceleration = values[:3]
         rotational_acceleration = values[3:6]
-        joint_positions = values[7:]
+        joint_positions = values[7:12]
         heading = values[6]
         distance = values[13]
 
