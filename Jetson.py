@@ -30,11 +30,11 @@ try:
                     print(positions)
                 data = positions.replace('[', '').replace(']', '').split(',')
                 # All elements except the last two are joint angles
-                joint_angles_degrees = [float(angle) for angle in data[:-2]]
+                joint_angles_degrees = [float(angle) for angle in data[:5]]
                 # The second last element is the left contact binary
-                left_contact = int(data[-2])
+                left_contact = int(data[6])
                 # The last element is the right contact binary
-                right_contact = int(data[-1])
+                right_contact = int(data[7])
                 message.extend(joint_angles_degrees)
                 # Add left and right contact at the end of the message
                 message.append(left_contact)
