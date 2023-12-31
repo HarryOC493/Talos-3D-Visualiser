@@ -12,7 +12,6 @@ macbook_port = 50000
 
 # Create a socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 try:
     # Connect to the MacBook
     sock.connect((macbook_ip, macbook_port))
@@ -20,12 +19,15 @@ try:
 
     while True:
         try:
+            debug = 1
             message = []
             left_contact, right_contact = None, None  # Initialize the contact variables
 
             # Read data from the joints
             positions = ser1.readline().decode('utf-8').strip()
             if positions:
+                if debug:
+                    print(positions)
                 data = positions.replace('[', '').replace(']', '').split(',')
                 # All elements except the last two are joint angles
                 joint_angles_degrees = [float(angle) for angle in data[:-2]]
@@ -41,12 +43,16 @@ try:
             # Read data from the imu
             angles = ser2.readline().decode('utf-8').strip()
             if angles:
+                if debug:
+                    print(angles)
                 imu_angles_degrees = [float(angle) for angle in angles.replace('[', '').replace(']', '').split(',')]
                 message.extend(imu_angles_degrees)
 
             # Read data from the distance sensor
             distance_str = ser3.readline().decode('utf-8').strip()
             if distance_str:
+                if debug:
+                    print(distance_str)
                 distance = float(distance_str)
                 message.append(distance)
 
