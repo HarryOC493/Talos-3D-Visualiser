@@ -8,6 +8,8 @@ float L_Ankle[7]  = {0.47, 0.28, 27, -40, A5, 0, 0};
 
 // Number of readings to use for the moving average
 const int numReadings = 10;
+bool LContact = false;
+bool RContact = false;
 
 // Arrays to store readings and indices for each joint
 int readings[6][numReadings];
@@ -25,6 +27,25 @@ void setup() {
 }
 
 void loop() {
+  int L_Foot_Reading = analogRead(A6);
+  int R_Foot_Reading = analogRead(A7);
+
+  float L_Foot = (L_Foot_Reading * 3.3) / 4095.0;
+  float R_Foot = (R_Foot_Reading * 3.3) / 4095.0;
+
+  if (L_Foot > 0.75) {
+    LContact = true;
+  } else {
+    LContact = false;
+  }
+
+  if (R_Foot > 0.75) {
+    RContact = true;
+  } else {
+    RContact = false;
+  }
+  
+
   // Read angles for each joint
   int joint_angles[6] = {
     potToVoltage(R_Thaigh),
@@ -52,6 +73,11 @@ void loop() {
       Serial.print(",");
     }
   }
+
+  Serial.print(",");
+  Serial.print(LContact);
+  Serial.print(",");
+  Serial.print(RContact);
   Serial.println();
 
   // Move to the next position in the array
