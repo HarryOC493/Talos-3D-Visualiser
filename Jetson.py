@@ -45,7 +45,8 @@ try:
             if angles:
                 if debug:
                     print(angles)
-                imu_angles_degrees = [float(angle) for angle in angles.replace('[', '').replace(']', '').split(',')]
+                data = angles.replace('[', '').replace(']', '').split(',')
+                imu_angles_degrees = [float(angle) for angle in data]
                 message.extend(imu_angles_degrees)
 
             # Read data from the distance sensor
