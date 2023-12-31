@@ -2,8 +2,8 @@ import serial
 import socket
 
 # Replace with the appropriate serial ports for your Arduino devices and their respective baud rates
-ser1 = serial.Serial('/dev/ttyACM0', 9600)
-ser3 = serial.Serial('/dev/ttyACM1', 9600)
+ser1 = serial.Serial('/dev/ttyACM1', 9600)
+ser3 = serial.Serial('/dev/ttyACM0', 9600)
 ser2 = serial.Serial('/dev/ttyACM2', 9600)
 
 # Replace with your MacBook's IP address and the chosen port number
@@ -30,11 +30,11 @@ try:
                     print(positions)
                 data = positions.replace('[', '').replace(']', '').split(',')
                 # All elements except the last two are joint angles
-                joint_angles_degrees = [float(angle) for angle in data[:5]]
+                joint_angles_degrees = [float(angle) for angle in data[:-2]]
                 # The second last element is the left contact binary
-                left_contact = int(data[6])
+                left_contact = int(data[-2])
                 # The last element is the right contact binary
-                right_contact = int(data[7])
+                right_contact = int(data[-1])
                 message.extend(joint_angles_degrees)
                 # Add left and right contact at the end of the message
                 message.append(left_contact)
