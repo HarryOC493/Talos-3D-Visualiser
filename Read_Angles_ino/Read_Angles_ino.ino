@@ -47,7 +47,7 @@ void loop() {
   
 
   // Read angles for each joint
-  int joint_angles[6] = {
+  int joint_angles[6]  = {
     potToVoltage(R_Thaigh),
     potToVoltage(R_Knee),
     potToVoltage(R_Ankle),
@@ -55,6 +55,8 @@ void loop() {
     potToVoltage(L_Knee),
     potToVoltage(L_Ankle)
   };
+
+  float averaged_angles[6]; // Array to store averaged angles for each joint
 
   // Update the moving average for each joint
   for (int i = 0; i < 6; ++i) {
@@ -66,7 +68,7 @@ void loop() {
       total += readings[i][j];
     }
     int average = total / numReadings;
-
+    averaged_angles[i] = average; // Store the averaged angle
     // Send the averaged value for each joint
     Serial.print(average);
     if (i < 5) {
@@ -75,6 +77,14 @@ void loop() {
   }
 
   Serial.print(",");
+  velocity(R_Thaigh, averaged_angles[0]);
+  velocity(R_Knee, averaged_angles[1]);
+  velocity(R_Ankle, averaged_angles[2]);
+
+  velocity(L_Thaigh, averaged_angles[3]);
+  velocity(L_Knee, averaged_angles[4]);
+  velocity(L_Ankle, averaged_angles[5]);
+
   Serial.print(LContact);
   Serial.print(",");
   Serial.print(RContact);
@@ -95,10 +105,29 @@ float potToVoltage(float joint[7]) {
   const float referenceVoltage = 3.3; // Arduino Due operates at 3.3V
   // Convert raw ADC value to voltage
   float voltage = (rawValue * referenceVoltage) / 4095.0;
-
   int angle = int(fmap(voltage, joint[1], joint[0], joint[3], joint[2]));
+
   return angle;
 }
+
+
+
+
+float velocity(float joint[7], float averagedAngle) {
+  // Calculate velocity using averaged angle
+  float deltaTime = (millis() - joint[6]) / 1000.0; // Time in seconds
+  float deltaAngle = averagedAngle - joint[5];
+  float velocity = deltaAngle / deltaTime; // Angular velocity in degrees per second
+  // Update the stored previous position and time
+  joint[5] = averagedAngle;  // Update prevPosition with averaged angle
+  joint[6] = millis();       // Update prevTime
+
+  Serial.print(velocity);
+  Serial.print(',');
+  return velocity;
+}
+
+
 
 float fmap(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;

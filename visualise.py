@@ -1,3 +1,5 @@
+from re import split
+from turtle import left, right
 import pybullet as p
 import time
 import math
@@ -27,12 +29,14 @@ conn, addr = sock.accept()
 print(f"Connected to {addr}")
 
 fig = plt.figure(figsize=(12, 8))  # Adjust the figure size as needed
-ax_lin = fig.add_subplot(2, 2, 1, projection='3d')
-ax_rot = fig.add_subplot(2, 2, 2, projection='3d')
-ax_dist = fig.add_subplot(2, 2, 3)  # 2D plot for distance
-ax_heading = fig.add_subplot(2, 2, 4, projection='polar')  # Polar plot for heading
-ax_left_foot = fig.add_subplot(2, 3, 5)  # Subplot for left foot contact
-ax_right_foot = fig.add_subplot(2, 3, 6)  # Subplot for right foot contact
+
+# Adjusted subplot positions in a 3x3 grid
+ax_lin = fig.add_subplot(3, 3, 1, projection='3d')
+ax_rot = fig.add_subplot(3, 3, 2, projection='3d')
+ax_dist = fig.add_subplot(3, 3, 4)  # 2D plot for distance
+ax_heading = fig.add_subplot(3, 3, 5, projection='polar')  # Polar plot for heading
+ax_left_foot = fig.add_subplot(3, 3, 7)  # Subplot for left foot contact
+ax_right_foot = fig.add_subplot(3, 3, 8)  # Subplot for right foot contact
 
 
 ax_lin.set_title('Linear Acceleration')
@@ -129,21 +133,33 @@ try:
 
         # Extract the data from the split_message list
         linear_acceleration = split_message[:3]
+        print(linear_acceleration)
         rotational_acceleration = split_message[3:6]
-        joint_positions = split_message[6:12]
-        heading = split_message[12]
-        distance = split_message[13]
-        left_contact = int(split_message[14])
-        right_contact = int(split_message[15])
+        print(rotational_acceleration)
+        joint_positions = split_message[7:13]
+        print(joint_positions)
+        joint_velocities = split_message[14:20]
+        heading = split_message[6]
+        print(heading)
+        distance = split_message[22]
+        print(distance)
+        left_contact = int(split_message[20])
+        print(left_contact)
+        right_contact = int(split_message[21])
+        print(right_contact)
 
         if joint_positions:
+            print(joint_positions)
             joint_angles_radians = [math.radians(angle) for angle in joint_positions]
+
             for joint_index, angle_rad in zip(joint_indices, joint_angles_radians):
                 p.setJointMotorControl2(robot_id, joint_index, p.POSITION_CONTROL, targetPosition=angle_rad, force=500)
             p.stepSimulation()
+            print("Stepped Simulation")
 
         # Update the plots with the new data
         update_plots(linear_acceleration, rotational_acceleration, distance, heading, left_contact, right_contact)
+        
 
 except KeyboardInterrupt:
     pass
